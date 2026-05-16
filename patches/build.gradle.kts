@@ -17,15 +17,6 @@ dependencies {
     implementation(libs.morphe.patches.library)
 }
 
-tasks {
-    register<JavaExec>("generatePatchesList") {
-        description = "Generate patches-list.json"
-        classpath = sourceSets.main.get().runtimeClasspath
-        mainClass = "app.gramnaters.patches.hotstar.utils.PatchListGenerator"
-        workingDir = rootProject.projectDir
-    }
-}
-
 kotlin {
     compilerOptions {
         freeCompilerArgs = listOf("-Xcontext-parameters")

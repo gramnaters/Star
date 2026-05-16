@@ -1,0 +1,101 @@
+{
+  "version": "1.0.0",
+  "patches": [
+    {
+      "name": "Settings",
+      "description": "Adds persistent settings via SharedPreferences for controlling patch behavior",
+      "default": true,
+      "dependencies": [],
+      "compatiblePackages": [
+        {
+          "packageName": "in.startv.hotstar",
+          "name": "JioHotstar",
+          "apkFileType": "APKM",
+          "appIconColor": "#E53935",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "v12572",
+              "isExperimental": false,
+              "minSdk": 21,
+              "description": "Tested on version code 12572"
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Device compatibility",
+      "description": "Fixes split APK manifest attributes and native library extraction for merged installs",
+      "default": true,
+      "dependencies": [],
+      "compatiblePackages": [
+        {
+          "packageName": "in.startv.hotstar",
+          "name": "JioHotstar",
+          "apkFileType": "APKM",
+          "appIconColor": "#E53935",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "v12572",
+              "isExperimental": false,
+              "minSdk": 21,
+              "description": "Tested on version code 12572"
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Cookie seeding",
+      "description": "Hooks Application.onCreate to read auth tokens from assets/cookies/ and cache them for subsequent injection",
+      "default": true,
+      "dependencies": ["Settings"],
+      "compatiblePackages": [
+        {
+          "packageName": "in.startv.hotstar",
+          "name": "JioHotstar",
+          "apkFileType": "APKM",
+          "appIconColor": "#E53935",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "v12572",
+              "isExperimental": false,
+              "minSdk": 21,
+              "description": "Tested on version code 12572"
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Identity repository injection",
+      "description": "Patches LFf/d token getters (user token c() and media token i()) to return injected cookies when memory cache is empty",
+      "default": true,
+      "dependencies": ["Settings"],
+      "compatiblePackages": [
+        {
+          "packageName": "in.startv.hotstar",
+          "name": "JioHotstar",
+          "apkFileType": "APKM",
+          "appIconColor": "#E53935",
+          "signatures": null,
+          "targets": [
+            {
+              "version": "v12572",
+              "isExperimental": false,
+              "minSdk": 21,
+              "description": "Tested on version code 12572"
+            }
+          ]
+        }
+      ],
+      "options": []
+    }
+  ]
+}
