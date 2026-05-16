@@ -17,6 +17,20 @@ dependencies {
     implementation(libs.morphe.patches.library)
 }
 
+tasks {
+    register<JavaExec>("generatePatchesList") {
+        description = "Build patch with patch list"
+
+        dependsOn(build)
+
+        classpath = sourceSets["main"].runtimeClasspath
+        mainClass.set("app.morphe.util.PatchListGeneratorKt")
+    }
+    publish {
+        dependsOn("generatePatchesList")
+    }
+}
+
 kotlin {
     compilerOptions {
         freeCompilerArgs = listOf("-Xcontext-parameters")
