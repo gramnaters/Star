@@ -33,7 +33,7 @@ jobs:
           java-version: 17
 
       - name: Build patches
-        run: ./gradlew :patches:build :patches:generatePatchesList --stacktrace
+        run: ./gradlew :patches:generatePatchesList --stacktrace
         env:
           GITHUB_TOKEN: ${{ secrets.GPR_KEY }}
           GITHUB_ACTOR: ${{ github.actor }}
