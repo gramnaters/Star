@@ -1,34 +1,31 @@
 package app.gramnaters.patches.hotstar.utils
 
 import app.morphe.patcher.Fingerprint
-import app.morphe.patcher.Opcode
+import app.morphe.patcher.string
+import com.android.tools.smali.dexlib2.Opcode
 
 object Fingerprints {
-    val ApplicationOnCreate = Fingerprint(
+    val ApplicationOnCreate = object : Fingerprint(
         returnType = "V",
-        opcodes = listOf(
-            Opcode.INVOKE_SUPER,
-            Opcode.NEW_INSTANCE,
+        name = "onCreate",
+        filters = listOf(
+            string("onCreate"),
         ),
-        methodName = "onCreate",
-        parameters = listOf(),
-    )
+    ) {}
 
-    val UserTokenGetter = Fingerprint(
+    val UserTokenGetter = object : Fingerprint(
         returnType = "Ljava/lang/Object;",
-        opcodes = listOf(
-            Opcode.IGET_OBJECT,
-            Opcode.IF_NEZ,
-        ),
         strings = listOf("getUserTokenValue"),
-    )
-
-    val MediaTokenGetter = Fingerprint(
-        returnType = "Ljava/lang/Object;",
-        opcodes = listOf(
-            Opcode.IGET_OBJECT,
-            Opcode.IF_NEZ,
+        filters = listOf(
+            string("getUserTokenValue"),
         ),
+    ) {}
+
+    val MediaTokenGetter = object : Fingerprint(
+        returnType = "Ljava/lang/Object;",
         strings = listOf("getMediaTokenValue"),
-    )
+        filters = listOf(
+            string("getMediaTokenValue"),
+        ),
+    ) {}
 }

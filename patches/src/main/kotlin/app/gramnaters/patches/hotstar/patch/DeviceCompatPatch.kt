@@ -2,6 +2,7 @@ package app.gramnaters.patches.hotstar.patch
 
 import app.gramnaters.patches.hotstar.utils.Constants
 import app.morphe.patcher.patch.resourcePatch
+import org.w3c.dom.Element
 
 val deviceCompatPatch = resourcePatch(
     name = "Device compatibility",
@@ -9,44 +10,43 @@ val deviceCompatPatch = resourcePatch(
     default = true,
 ) {
     compatibleWith(Constants.COMPATIBILITY_HOTSTAR)
-    execute { document ->
-        val manifest = document.manifest
+    execute {
+        document("AndroidManifest.xml").use { document ->
+            val manifest = document.getElementsByTagName("manifest").item(0) as Element
 
-        // Remove split-related attributes that prevent installation on some devices
-        val splitAttrs = listOf(
-            "android:isSplitRequired",
-            "android:requiredSplitTypes",
-            "android:splitTypes",
-            "android:intentMatchingFlags",
-        )
-        for (attr in splitAttrs) {
-            val nodes = document.allNodes { it.hasAttr(attr) }
-            for (node in nodes) {
-                node.removeAttr(attr)
+            val splitAttrs = listOf(
+                "android:isSplitRequired",
+                "android:requiredSplitTypes",
+                "android:splitTypes",
+                "android:intentMatchingFlags",
+            )
+            for (attr in splitAttrs) {
+                if (manifest.hasAttribute(attr)) {
+                    manifest.removeAttribute(attr)
+                }
             }
-        }
 
-        // Remove splits meta-data entry
-        val metaNodes = document.allNodes {
-            it.tagName == "meta-data" &&
-            it.attr("android:name") == "com.android.vending.splits"
-        }
-        for (node in metaNodes) {
-            node.remove()
-        }
+            val metaDataNodes = manifest.getElementsByTagName("meta-data")
+            for (i in 0 until metaDataNodes.length) {
+                val meta = metaDataNodes.item(i) as Element
+                if (meta.getAttribute("android:name") == "com.android.vending.splits") {
+                    meta.parentNode?.removeChild(meta)
+                }
+            }
 
-        // Set extractNativeLibs = true (required for merged split APKs)
-        val applicationNode = document.allNodes { it.tagName == "application" }.firstOrNull()
-        if (applicationNode != null) {
-            applicationNode.attr("android:extractNativeLibs", "true")
-        }
+            val applicationNodes = document.getElementsByTagName("application")
+            if (applicationNodes.length > 0) {
+                val application = applicationNodes.item(0) as Element
+                application.setAttribute("android:extractNativeLibs", "true")
+            }
 
-        // Fix @null drawables
-        val nullDrawables = document.allNodes {
-            it.attr("android:drawable") == "@null"
-        }
-        for (node in nullDrawables) {
-            node.attr("android:drawable", "@android:color/transparent")
+            val allElements = document.getElementsByTagName("*")
+            for (i in 0 until allElements.length) {
+                val el = allElements.item(i) as Element
+                if (el.getAttribute("android:drawable") == "@null") {
+                    el.setAttribute("android:drawable", "@android:color/transparent")
+                }
+            }
         }
     }
 }
