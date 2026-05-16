@@ -3,12 +3,12 @@ name: Build
 on:
   push:
     branches: [master]
-    tags:
-      - 'v*'
     paths:
       - 'patches/**'
       - 'extensions/**'
       - '.github/workflows/build.yml'
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 env:
