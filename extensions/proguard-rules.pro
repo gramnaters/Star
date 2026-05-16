@@ -1,0 +1,2 @@
+-keep class app.gramnaters.hotstar.** { *; }
+-keep class com.hotstar.patch.** { *; }
