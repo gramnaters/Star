@@ -1,6 +1,7 @@
 [versions]
 morphe-patcher = "1.5.0"
 morphe-patches-library = "1.2.0"
+smali = "b6365a84f4"
 gson = "2.13.2"
 annotation = "1.9.1"
 
